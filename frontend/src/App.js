@@ -9,16 +9,14 @@ import RightSection from "./components/RightSection";
 function App() {
 
   const [user, setUser] = useState(null)
-  const [items, setItems] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/items')
+      const response = await fetch('/auth')
       const json = await response.json()
-      console.log(json)
+      console.log(response)
 
       if (response.ok) {
-        setItems(json.items)
         if ("username" in json) {
           setUser({ username: json.username, avatar: json.avatar })
         }
@@ -32,7 +30,7 @@ function App() {
     <Router>
       <div className="container">
         <Sidebar user={user} />
-        <Main items={items} />
+        <Main />
         <RightSection user={user} />
       </div>
     </Router>

@@ -4,19 +4,24 @@ const Item = require("../models/itemModel");
 const {
     getItems,
     addItems,
-    getItemsByRegex
+    getItemsByRegex,
+    getUserInventory
 } = require("../controllers/itemController")
 
 const router = express.Router();
 
 // GET all items
-router.get("/", getItems);
+router.get("/get", getItems);
+
+// UPDATE all items
+router.get("/update", addItems);
+
+// GET user inventory
+router.get("/inventory", getUserInventory);
 
 // GET all items
 router.get("/:regex", getItemsByRegex);
 
-// UPDATE all items
-router.get("/update", addItems);
 
 
 

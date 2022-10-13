@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 // components
 import ItemShowcase from "./ItemShowcase";
 
-const Items = () => {
+const Inventory = () => {
   const [items, setItems] = useState(null);
   const [data, setData] = useState(null);
 
@@ -14,7 +14,7 @@ const Items = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const response = await fetch("/api/items/get");
+      const response = await fetch("/api/items/inventory");
       const json = await response.json();
       console.log(json);
 
@@ -76,8 +76,8 @@ const Items = () => {
   }
 
   return (
-    <div className="items">
-      <h1>Items</h1>
+    <div className="inventory">
+      <h1>Inventory</h1>
       <div className="control-bar">
         <i className="material-icons-sharp icon">search</i>
         <input
@@ -103,4 +103,4 @@ const Items = () => {
   );
 };
 
-export default Items;
+export default Inventory;

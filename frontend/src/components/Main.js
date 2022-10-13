@@ -3,6 +3,7 @@ import {
     Route
 } from "react-router-dom";
 import Dashboard from "./Dashboard";
+import Inventory from "./Inventory";
 import Items from "./Items";
 
 const Main = ({ items }) => {
@@ -11,7 +12,8 @@ const Main = ({ items }) => {
         <main>
             <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/items" element={<Items items={items} />} />
+                <Route path="/items" element={<Items />} />
+                <Route path="/inventory" element={<Inventory />} />
             </Routes>
         </main>
     );

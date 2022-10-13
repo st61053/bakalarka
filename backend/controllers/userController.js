@@ -21,8 +21,23 @@ const getUser = async (req, res) => {
     }
 }
 
+// get all items
+const isLoggedIn = async (req, res) => {
+    if (req.session.user) {
+        res.status(200).json({
+            username: req.session.user.personaname,
+            avatar: req.session.user.avatar
+        });
+    } else {
+        res.status(200).json({});
+    }
+
+
+};
+
 module.exports = {
     logoutUser,
-    getUser
+    getUser,
+    isLoggedIn
 }
 
