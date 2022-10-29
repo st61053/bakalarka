@@ -2,30 +2,19 @@ import { useState, useEffect } from "react";
 // components
 import ItemShowcase from "./ItemShowcase";
 
-const Items = () => {
-  const [items, setItems] = useState(null);
-  const [data, setData] = useState(null);
+const Items = (props) => {
+  const [items, setItems] = useState(props.items);
+  const [data, setData] = useState(props.items);
 
   const maxCountOfItemsOnPage = 12;
+  const [currPage, setCurrPage] = useState(1);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(maxCountOfItemsOnPage);
 
-  const [currPage, setCurrPage] = useState(1);
-
   useEffect(() => {
-    const fetchItems = async () => {
-      const response = await fetch("/api/items/get");
-      const json = await response.json();
-      console.log(json);
-
-      if (response.ok) {
-        setItems(json.items);
-        setData(json.items);
-      }
-    };
-
-    fetchItems();
-  }, []);
+        setItems(props.items);
+        setData(props.items);
+  }, [props.items]);
 
   function handleChange(event) {
     setStart(0);

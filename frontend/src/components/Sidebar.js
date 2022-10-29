@@ -48,10 +48,12 @@ const Sidebar = ({ user }) => {
           <span className="material-icons-sharp">category</span>
           <h3>All items</h3>
         </Link>
-        <Link to="/inventory" onClick={handleChangeActive}>
-          <span className="material-icons-sharp">inventory_2</span>
-          <h3>Inventory</h3>
-        </Link>
+        {user && (
+          <Link to="/inventory" onClick={handleChangeActive}>
+            <span className="material-icons-sharp">inventory_2</span>
+            <h3>Inventory</h3>
+          </Link>
+        )}
         <a href="/#">
           <span className="material-icons-sharp">pie_chart</span>
           <h3>Graphs</h3>

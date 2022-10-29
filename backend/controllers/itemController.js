@@ -4,49 +4,52 @@ const mongoose = require("mongoose");
 // get all items
 const getItems = async (req, res) => {
   const items = await Item.find({}).sort({ "prices.first_seen": -1 });
-  //const items = await Item.find({ "market_name": { "$regex": "blackout", "$options": "i" } }).sort({ "prices.first_seen": -1 });
-
   res.status(200).json({ items: items });
 };
 
 // get user inventory
 const getUserInventory = async (req, res) => {
-  const api = await fetch(
-    "https://steamcommunity.com/inventory/76561198074923638/252490/2?l=english&count=5000"
-  );
-
-  if (api.ok) {
-    const data = await api.json();
-
-    const items = [];
-
-    data.descriptions.forEach((item) => {
-      items.push({
-        market_name: item.market_name,
-        marketable: item.marketable,
-        tradable: item.tradable,
-      });
-    });
-
-    data.assets.map((asset, index) => {
-      if (index < items.length) {
-        items[index].amount = asset.amount;
-      }
-    });
-
-    const tmpItems = items.filter(
-      (item) => item.marketable === 1 && item.tradable === 1
+  if (req.session.user) {
+    const api = await fetch(
+      `https://steamcommunity.com/inventory/${req.session.user.steamid}/252490/2?l=english&count=5000`
     );
 
-    const market_names = [];
+    if (api.ok) {
+      const data = await api.json();
 
-    tmpItems.map((item) => {
-      market_names.push(item.market_name);
-    });
+      const items = [];
 
-    const inventory = await Item.find({ market_name: { $in: market_names } });
+      data.descriptions.forEach((item) => {
+        items.push({
+          market_name: item.market_name,
+          marketable: item.marketable,
+          tradable: item.tradable,
+        });
+      });
 
-    res.status(200).json({ items: inventory});
+      data.assets.map((asset, index) => {
+        if (index < items.length) {
+          items[index].amount = asset.amount;
+        }
+      });
+
+      const tmpItems = items.filter(
+        (item) => item.marketable === 1 && item.tradable === 1
+      );
+
+      const market_names = [];
+
+      tmpItems.map((item) => {
+        market_names.push(item.market_name);
+      });
+
+      const inventory = await Item.find({ market_name: { $in: market_names } });
+
+      res.status(200).json({ items: inventory });
+    }
+  } else {
+    // doplnit - není přihlášený uživatel
+    res.status(200).json({});
   }
 };
 
