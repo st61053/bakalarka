@@ -22,7 +22,7 @@ const Items = (props) => {
     setCurrPage(1);
     setItems(
       data.filter((item) =>
-        item.market_name
+        item.name
           .toLowerCase()
           .includes(event.target.value.toLowerCase())
       )

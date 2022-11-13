@@ -5,16 +5,18 @@ const {
     getItems,
     addItems,
     getItemsByRegex,
-    getUserInventory
+    getUserInventory,
+    synchronizeRustItems,
+    getRustItems
 } = require("../controllers/itemController")
 
 const router = express.Router();
 
 // GET all items
-router.get("/get", getItems);
+router.get("/get", getRustItems);
 
 // UPDATE all items
-router.get("/update", addItems);
+router.get("/update", synchronizeRustItems);
 
 // GET user inventory
 router.get("/inventory", getUserInventory);
